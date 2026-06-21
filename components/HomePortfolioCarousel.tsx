@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import SlideCarousel from "./SlideCarousel";
 import PortfolioCategoryCard from "./PortfolioCategoryCard";
 import { chunkItems } from "@/lib/chunkItems";
+import { getHomePortfolioImage } from "@/data/homePortfolioImages";
 import { productCategories } from "@/data/products";
 
 const DESKTOP_CARDS_PER_SLIDE = 3;
@@ -35,9 +36,16 @@ export default function HomePortfolioCarousel() {
             }`}
             data-count={chunk.length}
           >
-            {chunk.map((category) => (
-              <PortfolioCategoryCard key={category.slug} category={category} />
-            ))}
+            {chunk.map((category) => {
+              const categoryIndex = productCategories.findIndex((c) => c.slug === category.slug);
+              return (
+                <PortfolioCategoryCard
+                  key={category.slug}
+                  category={category}
+                  heroImage={getHomePortfolioImage(categoryIndex)}
+                />
+              );
+            })}
           </div>
         );
       }),

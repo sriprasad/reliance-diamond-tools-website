@@ -7,10 +7,10 @@ import CarouselDots from "./CarouselDots";
 import MediaFigure from "./MediaFigure";
 
 const BANNER_IMAGES = [
-  "/assert/image/image1.png",
-  "/assert/image/image2.png",
-  "/assert/image/image3.png",
-  "/assert/image/image4.png",
+  "/assert/image/BannerImage1.png",
+  "/assert/image/BannerImage2.png",
+  "/assert/image/BannerImage3.png",
+  "/assert/image/BannerImage4.png",
 ];
 
 const ROTATE_MS = 6000;

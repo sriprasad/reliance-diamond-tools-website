@@ -5,21 +5,20 @@ import type { ProductCategory } from "@/data/products";
 
 interface PortfolioCategoryCardProps {
   category: ProductCategory;
+  heroImage: string;
 }
 
-export default function PortfolioCategoryCard({ category }: PortfolioCategoryCardProps) {
-  const heroImage = category.children[0]?.items[0]?.image ?? "/assert/image/image1.png";
+export default function PortfolioCategoryCard({ category, heroImage }: PortfolioCategoryCardProps) {
   const summary = category.children[0]?.items[0]?.description ?? "";
 
   return (
     <article className="portfolio-category-card group surface-card card-interactive flex h-full flex-col">
       <div className="portfolio-category-card__image">
-        {/* TODO: replace with distinct product photo */}
         <Image
           src={heroImage}
           alt={category.name}
           fill
-          className="object-contain p-3"
+          className="object-cover object-center"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           loading="lazy"
         />

@@ -6,6 +6,7 @@ import HomeFoundationSlider from "@/components/HomeFoundationSlider";
 import HomeCustomersSection from "@/components/HomeCustomersSection";
 import ContactSection from "@/components/ContactSection";
 import MediaFigure from "@/components/MediaFigure";
+import { homeAboutSectionImages } from "@/data/homePortfolioImages";
 import HomePortfolioCarousel from "@/components/HomePortfolioCarousel";
 import SectionTitle from "@/components/SectionTitle";
 import { createPageMetadata } from "@/lib/seo";
@@ -64,20 +65,22 @@ export default function HomePage() {
       <section id="about" className="section-white section-padding">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="about-image-frame card-interactive p-4 md:p-5">
+            <div className="about-image-frame card-interactive">
               <div className="media-figure-grid media-figure-grid--2x1">
                 <MediaFigure
-                  src="/assert/image/image4.png"
+                  src={homeAboutSectionImages[0]}
                   alt="Reliance Diamond Tools manufacturing facility"
                   caption="Manufacturing Facility — Madhavaram"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   priority
+                  cover
                 />
                 <MediaFigure
-                  src="/assert/image/image1.png"
+                  src={homeAboutSectionImages[1]}
                   alt="Precision diamond and super abrasive cutting tools"
                   caption="Precision Tooling Production"
                   sizes="(max-width: 1024px) 100vw, 50vw"
+                  cover
                 />
               </div>
             </div>

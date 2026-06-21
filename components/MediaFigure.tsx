@@ -10,6 +10,8 @@ interface MediaFigureProps {
   /** Optional WebP variant path (defaults to .webp alongside .jpg/.png) */
   webpSrc?: string;
   className?: string;
+  /** Fill frame edge-to-edge (cover) instead of letterboxed contain */
+  cover?: boolean;
 }
 
 /** Only industry JPGs have generated WebP siblings — not banner PNGs. */
@@ -30,13 +32,15 @@ export default function MediaFigure({
   loading,
   webpSrc,
   className = "",
+  cover = false,
 }: MediaFigureProps) {
   const resolvedWebp = webpSrc ?? webpPathFromSrc(src);
   const imageLoading = loading ?? (priority ? "eager" : "lazy");
+  const imageFitClass = cover ? "object-cover object-center" : "object-contain p-2";
 
   return (
     <figure className={`media-figure ${className}`}>
-      <div className="media-figure__frame">
+      <div className={`media-figure__frame${cover ? " media-figure__frame--cover" : ""}`}>
         {resolvedWebp ? (
           <picture className="absolute inset-0 block">
             <source srcSet={resolvedWebp} type="image/webp" />
@@ -46,7 +50,7 @@ export default function MediaFigure({
               alt={alt}
               loading={imageLoading}
               decoding="async"
-              className="absolute inset-0 h-full w-full object-contain p-2"
+              className={`absolute inset-0 h-full w-full ${imageFitClass}`}
             />
           </picture>
         ) : (
@@ -54,7 +58,7 @@ export default function MediaFigure({
             src={src}
             alt={alt}
             fill
-            className="object-contain p-2"
+            className={imageFitClass}
             sizes={sizes}
             priority={priority}
             loading={imageLoading}
