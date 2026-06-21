@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import {
   Square,
@@ -55,15 +55,29 @@ export default function ProductCategoryView({ category }: Props) {
   const [activeChild, setActiveChild] = useState<ProductChild>(category.children[0]);
   const [detailProduct, setDetailProduct] = useState<ProductItem | null>(null);
 
+  useEffect(() => {
+    const applyHash = () => {
+      const slug = window.location.hash.replace(/^#/, "");
+      if (!slug) return;
+      const match = category.children.find((c) => c.slug === slug);
+      if (match) setActiveChild(match);
+    };
+
+    applyHash();
+    window.addEventListener("hashchange", applyHash);
+    return () => window.removeEventListener("hashchange", applyHash);
+  }, [category]);
+
   return (
     <div className="py-4 md:py-6">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section 1 (top): Child menu as horizontal tabs, centered, glossy buttons */}
-        <section className="border-b border-gray-200 pb-4 mb-6">
-          <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-3 text-center">
-            {category.name}
-          </p>
-          <nav className="flex flex-wrap justify-center gap-3">
+        <section className="border-b border-gainsboro pb-4 mb-6" aria-label="Product line navigation">
+          <nav
+            className="flex flex-wrap justify-center gap-3"
+            role="tablist"
+            aria-label={`${category.name} product lines`}
+          >
             {category.children.map((child) => {
               const isActive = activeChild.slug === child.slug;
               const Icon = CHILD_ICONS[child.iconKey] ?? Box;
@@ -71,22 +85,18 @@ export default function ProductCategoryView({ category }: Props) {
                 <button
                   key={child.slug}
                   type="button"
+                  role="tab"
+                  id={`tab-${child.slug}`}
+                  aria-selected={isActive}
+                  aria-controls={`panel-${child.slug}`}
                   onClick={() => setActiveChild(child)}
-                  className={`flex items-center justify-center gap-2 w-[180px] min-w-[180px] h-10 rounded-lg text-xs font-medium transition-all duration-200 truncate px-2 border ${
+                  className={`product-tab-btn flex items-center justify-center gap-2 w-[180px] min-w-[180px] h-10 text-xs font-medium truncate px-2 border ${
                     isActive
-                      ? "border-gray-300 text-gray-900"
-                      : "border-gray-200 text-gray-700 hover:border-gray-300 hover:shadow-md"
+                      ? "product-tab-btn-active border-black text-black bg-alice-blue"
+                      : "border-gainsboro text-dim-grey-2 bg-white"
                   }`}
-                  style={{
-                    background: isActive
-                      ? "linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(229,231,235,0.98) 100%)"
-                      : "linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(249,250,251,1) 100%)",
-                    boxShadow: isActive
-                      ? "inset 0 1px 0 rgba(255,255,255,0.9), 0 2px 8px rgba(0,0,0,0.08)"
-                      : "inset 0 1px 0 rgba(255,255,255,0.95), 0 1px 4px rgba(0,0,0,0.06)",
-                  }}
                 >
-                  <Icon className="w-4 h-4 shrink-0" />
+                  <Icon className="w-4 h-4 shrink-0" aria-hidden="true" />
                   <span className="truncate" title={child.name}>
                     {child.name}
                   </span>
@@ -97,39 +107,39 @@ export default function ProductCategoryView({ category }: Props) {
         </section>
 
         {/* Section 2 (below): Image & detail grid - 3 columns × N rows */}
-        <section>
-          <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-4">
+        <section
+          role="tabpanel"
+          id={`panel-${activeChild.slug}`}
+          aria-labelledby={`tab-${activeChild.slug}`}
+        >
+          <h2 className="text-[10px] text-dim-grey-2 uppercase tracking-wider mb-4 font-semibold">
             {activeChild.name}
-          </p>
+          </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {activeChild.items.map((item) => (
-              <div
-                key={item.id}
-                className="rounded-xl border border-gray-200 bg-white overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200"
-              >
-                <div className="relative aspect-[4/3] bg-gray-100">
+              <div key={item.id} className="product-grid-card card-interactive">
+                <div className="product-grid-image relative aspect-[4/3] bg-alice-blue">
                   <Image
                     src={item.image}
                     alt={item.name}
                     fill
                     className="object-cover"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    loading="lazy"
                   />
                 </div>
                 <div className="p-4">
-                  <h3 className="font-heading font-semibold text-gray-900 text-sm mb-1">
-                    {item.name}
-                  </h3>
-                  <p className="text-xs text-gray-600 leading-relaxed mb-3">
+                  <h3 className="product-grid-name">{item.name}</h3>
+                  <p className="text-xs text-grey-2 leading-relaxed mb-3">
                     {item.description}
                   </p>
                   <div className="flex justify-end">
                     <button
                       type="button"
                       onClick={() => setDetailProduct(item)}
-                      className="text-xs font-medium text-gray-600 hover:text-gray-900 underline underline-offset-2"
+                      className="link-primary text-xs bg-transparent border-0 cursor-pointer p-0"
                     >
-                      More
+                      View details
                     </button>
                   </div>
                 </div>

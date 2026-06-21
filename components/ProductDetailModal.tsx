@@ -20,6 +20,17 @@ export default function ProductDetailModal({ product, onClose }: Props) {
     };
   }, [product]);
 
+  useEffect(() => {
+    if (!product) return;
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [product, onClose]);
+
   if (!product) return null;
 
   return (
@@ -31,19 +42,19 @@ export default function ProductDetailModal({ product, onClose }: Props) {
       aria-labelledby="product-detail-title"
     >
       <div
-        className="relative w-full max-w-lg rounded-2xl border border-gray-200 bg-white shadow-xl overflow-hidden"
+        className="relative w-full max-w-lg border border-gainsboro bg-white shadow-xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-3 right-3 z-10 rounded-full p-1.5 bg-white/90 text-gray-600 hover:bg-gray-100 hover:text-gray-900 shadow-sm"
-          aria-label="Close"
+          className="absolute top-3 right-3 z-10 p-1.5 bg-white/90 text-dim-grey-2 hover:bg-alice-blue hover:text-black shadow-sm rounded-sm"
+          aria-label="Close product details"
         >
-          <X className="w-5 h-5" />
+          <X className="w-5 h-5" aria-hidden="true" />
         </button>
 
-        <div className="relative aspect-[4/3] bg-gray-100">
+        <div className="relative aspect-[4/3] bg-alice-blue">
           <Image
             src={product.image}
             alt={product.name}
@@ -53,12 +64,10 @@ export default function ProductDetailModal({ product, onClose }: Props) {
           />
         </div>
         <div className="p-6">
-          <h2 id="product-detail-title" className="font-heading text-xl font-semibold text-gray-900 mb-3">
+          <h2 id="product-detail-title" className="font-heading text-lg font-semibold text-black mb-3">
             {product.name}
           </h2>
-          <p className="text-sm text-gray-600 leading-relaxed">
-            {product.description}
-          </p>
+          <p className="text-body-sm leading-relaxed">{product.description}</p>
         </div>
       </div>
     </div>

@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --webpack",
     "build": "next build",
-    "deploy": "node -e \"require('fs').mkdirSync('deploy/rdt-website',{recursive:true}); require('fs').cpSync('out', 'deploy/rdt-website', {recursive: true})\" && gh-pages -d deploy",
+    "build:gh": "node -e \"require('child_process').execSync('npm run build', {env:Object.assign({}, process.env, {GITHUB_PAGES:'1'}), stdio:'inherit'})\"",
+    "images:webp": "node scripts/generate-webp.mjs",
+    "deploy": "npm run build:gh && gh-pages -d out",
     "start": "next start",
     "lint": "eslint"
   },
@@ -24,6 +26,7 @@
     "eslint-config-next": "16.1.6",
     "gh-pages": "^6.3.0",
     "jimp": "^1.6.0",
+    "sharp": "^0.35.2",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

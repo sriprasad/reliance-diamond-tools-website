@@ -14,7 +14,6 @@ export default function ContactForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Placeholder: would send to API or email service
   };
 
   const handleChange = (
@@ -28,13 +27,12 @@ export default function ContactForm() {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-      {/* Left: Company info */}
       <div>
-        <div className="space-y-4 text-sm text-gray-600">
+        <div className="space-y-6 text-body-sm">
           <div className="flex gap-3">
-            <MapPin className="w-5 h-5 shrink-0 text-gray-500" />
+            <MapPin className="w-5 h-5 shrink-0 text-black" />
             <div>
-              <p className="font-medium text-gray-900 mb-1">Company Address</p>
+              <p className="font-semibold text-black mb-1">Company Address</p>
               <p>
                 No 6 & 7, Association Road,
                 <br />
@@ -45,86 +43,50 @@ export default function ContactForm() {
             </div>
           </div>
           <div className="flex gap-3">
-            <Mail className="w-5 h-5 shrink-0 text-gray-500" />
+            <Mail className="w-5 h-5 shrink-0 text-black" />
             <div>
-              <p className="font-medium text-gray-900 mb-1">Email</p>
+              <p className="font-semibold text-black mb-1">Email</p>
               <a
                 href="mailto:info@reliancediamondtools.com"
-                className="hover:text-gray-900"
+                className="link-primary text-sm"
               >
                 info@reliancediamondtools.com
               </a>
             </div>
           </div>
           <div className="flex gap-3">
-            <Phone className="w-5 h-5 shrink-0 text-gray-500" />
+            <Phone className="w-5 h-5 shrink-0 text-black" />
             <div>
-              <p className="font-medium text-gray-900 mb-1">Phone</p>
+              <p className="font-semibold text-black mb-1">Phone</p>
               <p>+91-XXXXXXXXXX</p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Right: Contact form */}
-      <div className="rounded-xl border border-gray-200/80 bg-white p-6 shadow-sm">
+      <div className="border border-gainsboro bg-white p-6 shadow-sm">
         <form onSubmit={handleSubmit} className="space-y-4">
+          {(["name", "company", "email", "phone"] as const).map((field) => (
+            <div key={field}>
+              <label
+                htmlFor={field}
+                className="block text-sm font-semibold text-black mb-1 capitalize"
+              >
+                {field}
+              </label>
+              <input
+                id={field}
+                name={field}
+                type={field === "email" ? "email" : field === "phone" ? "tel" : "text"}
+                required={field === "name" || field === "email"}
+                value={formState[field]}
+                onChange={handleChange}
+                className="form-field w-full border border-gainsboro px-3 py-2.5 text-sm text-black transition-colors"
+              />
+            </div>
+          ))}
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-              Name
-            </label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              required
-              value={formState.name}
-              onChange={handleChange}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-200 transition-colors"
-            />
-          </div>
-          <div>
-            <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-1">
-              Company
-            </label>
-            <input
-              id="company"
-              name="company"
-              type="text"
-              value={formState.company}
-              onChange={handleChange}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-200 transition-colors"
-            />
-          </div>
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-              Email
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              required
-              value={formState.email}
-              onChange={handleChange}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-200 transition-colors"
-            />
-          </div>
-          <div>
-            <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-              Phone
-            </label>
-            <input
-              id="phone"
-              name="phone"
-              type="tel"
-              value={formState.phone}
-              onChange={handleChange}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-200 transition-colors"
-            />
-          </div>
-          <div>
-            <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="message" className="block text-sm font-semibold text-black mb-1">
               Message
             </label>
             <textarea
@@ -133,13 +95,10 @@ export default function ContactForm() {
               rows={4}
               value={formState.message}
               onChange={handleChange}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-200 transition-colors"
+              className="form-field w-full border border-gainsboro px-3 py-2.5 text-sm text-black transition-colors"
             />
           </div>
-          <button
-            type="submit"
-            className="w-full rounded-lg bg-gray-900 px-4 py-3 text-sm font-medium text-white hover:bg-gray-800 active:scale-[0.99] transition-all duration-200"
-          >
+          <button type="submit" className="w-full btn-primary py-3">
             Submit
           </button>
         </form>

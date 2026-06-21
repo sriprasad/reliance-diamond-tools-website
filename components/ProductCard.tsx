@@ -8,13 +8,11 @@ interface ProductCardProps {
 
 export default function ProductCard({ title, children, className = "" }: ProductCardProps) {
   return (
-    <div
-      className={`rounded-xl border border-gray-200/80 bg-white p-5 shadow-sm transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 ${className}`}
-    >
-      <h3 className="font-heading text-xl font-semibold text-gray-900 mb-2 tracking-tight">
+    <div className={`surface-card p-5 md:p-6 ${className}`}>
+      <h3 className="font-heading text-base font-semibold text-black mb-2 tracking-tight">
         {title}
       </h3>
-      {children && <div className="text-sm text-gray-600 leading-relaxed">{children}</div>}
+      {children && <div className="text-body-sm">{children}</div>}
     </div>
   );
 }
