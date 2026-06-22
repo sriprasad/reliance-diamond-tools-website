@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import HomeHeroBanner from "../components/HomeHeroBanner";
+import HomeEnterpriseStats from "@/components/HomeEnterpriseStats";
 import HomeFoundationSlider from "@/components/HomeFoundationSlider";
 import HomeCustomersSection from "@/components/HomeCustomersSection";
 import ContactSection from "@/components/ContactSection";
@@ -59,6 +60,8 @@ export default function HomePage() {
   return (
     <>
       <HomeHeroBanner />
+
+      <HomeEnterpriseStats />
 
       <HomeFoundationSlider />
 
@@ -229,7 +232,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="why-us" className="section-padding bg-mobile-blue">
+      <section id="why-us" className="section-padding bg-header-navy">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionTitle
             eyebrow="Our Strengths"

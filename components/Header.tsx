@@ -72,7 +72,7 @@ export default function Header() {
       {/* Backdrop when desktop mega menu is open */}
       {desktopProductsOpen && (
         <div
-          className="mega-menu-backdrop hidden md:block fixed inset-0 top-[76px] md:top-[84px] z-40 bg-mobile-blue/40 backdrop-blur-[2px]"
+          className="mega-menu-backdrop hidden md:block fixed inset-0 top-[76px] md:top-[84px] z-40 bg-header-bg/40 backdrop-blur-[2px]"
           aria-hidden="true"
           onClick={closeDesktopMenu}
         />
@@ -80,22 +80,20 @@ export default function Header() {
 
       <header
         ref={headerRef}
-        className="fixed top-0 left-0 right-0 z-50 bg-mobile-blue shadow-md border-b border-silver/20"
+        className="site-header fixed top-0 left-0 right-0 z-50 shadow-md border-b border-light-steel-blue/25"
         onMouseLeave={() => setDesktopProductsOpen(false)}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-[76px] md:h-[84px]">
             <Link href="/" className="header-brand-link flex items-center shrink-0 min-w-0 max-w-[55%] sm:max-w-none">
-              <span className="header-logo-wrap">
-                <Image
-                  src="/assert/image/RDTLogo.png"
-                  alt="Reliance Diamond Tools"
-                  width={68}
-                  height={68}
-                  className="h-12 w-12 sm:h-14 sm:w-14 md:h-16 md:w-16 object-contain header-logo"
-                  priority
-                />
-              </span>
+              <Image
+                src="/assert/image/RDTLogo.png"
+                alt="Reliance Diamond Tools"
+                width={68}
+                height={68}
+                className="h-12 w-12 sm:h-14 sm:w-14 md:h-16 md:w-16 object-contain shrink-0 header-logo"
+                priority
+              />
               <div className="min-w-0 hidden sm:block">
                 <span className="font-heading header-brand-name truncate">
                   RELIANCE DIAMOND TOOLS
@@ -183,7 +181,7 @@ export default function Header() {
         )}
 
         {mobileOpen && (
-          <div className="md:hidden bg-mobile-blue border-t border-silver/20 max-h-[80vh] overflow-y-auto">
+          <div className="md:hidden bg-header-bg-dropdown border-t border-light-steel-blue/20 max-h-[80vh] overflow-y-auto">
             <nav className="py-3 px-4 flex flex-col" aria-label="Mobile navigation">
               {navItems.map((item) =>
                 item.menu === "products" ? (
