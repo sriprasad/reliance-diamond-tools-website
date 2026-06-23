@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, ChevronDown, Mail } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import ProductsMenuCarousel from "./ProductsMenuCarousel";
 
 const navItems = [
@@ -31,17 +31,15 @@ export default function Header() {
 
   const navLinkClass = (active: boolean) =>
     active
-      ? "text-white bg-white/12"
-      : "text-white/85 hover:text-white hover:bg-white/8";
+      ? "site-header__nav-link site-header__nav-link--active"
+      : "site-header__nav-link";
 
-  /* Close mega menu on route change */
   useEffect(() => {
     setDesktopProductsOpen(false);
     setMobileOpen(false);
     setProductsOpen(false);
   }, [pathname]);
 
-  /* Close on Escape */
   useEffect(() => {
     if (!desktopProductsOpen) return;
 
@@ -53,7 +51,6 @@ export default function Header() {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [desktopProductsOpen, closeDesktopMenu]);
 
-  /* Close on outside click */
   useEffect(() => {
     if (!desktopProductsOpen) return;
 
@@ -69,10 +66,9 @@ export default function Header() {
 
   return (
     <>
-      {/* Backdrop when desktop mega menu is open */}
       {desktopProductsOpen && (
         <div
-          className="mega-menu-backdrop hidden md:block fixed inset-0 top-[76px] md:top-[84px] z-40 bg-header-bg/40 backdrop-blur-[2px]"
+          className="mega-menu-backdrop hidden md:block fixed inset-0 top-[var(--site-header-height)] z-40 bg-black/25 backdrop-blur-[1px]"
           aria-hidden="true"
           onClick={closeDesktopMenu}
         />
@@ -80,90 +76,78 @@ export default function Header() {
 
       <header
         ref={headerRef}
-        className="site-header fixed top-0 left-0 right-0 z-50 shadow-md border-b border-light-steel-blue/25"
+        className="site-header fixed top-0 left-0 right-0 z-50"
         onMouseLeave={() => setDesktopProductsOpen(false)}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-[76px] md:h-[84px]">
-            <Link href="/" className="header-brand-link flex items-center shrink-0 min-w-0 max-w-[55%] sm:max-w-none">
+          <div className="site-header__top">
+            <Link href="/" className="site-header__logo-link shrink-0" aria-label="Reliance Diamond Tools home">
               <Image
                 src="/assert/image/RDTLogo.png"
-                alt="Reliance Diamond Tools"
-                width={68}
-                height={68}
-                className="h-12 w-12 sm:h-14 sm:w-14 md:h-16 md:w-16 object-contain shrink-0 header-logo"
+                alt=""
+                width={104}
+                height={104}
+                className="site-header__logo header-logo"
                 priority
               />
-              <div className="min-w-0 hidden sm:block">
-                <span className="font-heading header-brand-name truncate">
-                  RELIANCE DIAMOND TOOLS
-                </span>
-                <span className="header-brand-tagline truncate hidden md:block">
-                  Engineering Precision Since 1994
-                </span>
-              </div>
             </Link>
 
-            <nav className="hidden md:flex items-center gap-0.5" aria-label="Main navigation">
-              {navItems.map((item) =>
-                item.menu === "products" ? (
-                  <div
-                    key={item.href}
-                    className="relative"
-                    onMouseEnter={() => setDesktopProductsOpen(true)}
-                  >
-                    <button
-                      type="button"
-                      id="products-menu-trigger"
-                      aria-expanded={desktopProductsOpen}
-                      aria-haspopup="true"
-                      aria-controls="products-mega-menu-panel"
-                      className={`flex items-center gap-1 px-2.5 lg:px-3 py-2 text-xs font-medium transition-colors whitespace-nowrap ${navLinkClass(isActive(item.href))}`}
-                    >
-                      {item.label}
-                      <ChevronDown
-                        className={`w-3.5 h-3.5 transition-transform ${desktopProductsOpen ? "rotate-180" : ""}`}
-                        aria-hidden="true"
-                      />
-                    </button>
-                  </div>
-                ) : (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`px-2.5 lg:px-3 py-2 text-xs font-medium transition-colors whitespace-nowrap ${navLinkClass(isActive(item.href))}`}
-                  >
-                    {item.label}
-                  </Link>
-                )
-              )}
-            </nav>
-
-            <div className="flex items-center gap-2 shrink-0">
-              <Link
-                href="/contact"
-                className="hidden lg:inline-flex btn-primary text-xs min-h-[2rem] py-1.5 px-3"
-              >
-                Request Quote
+            <div className="site-header__brand min-w-0">
+              <Link href="/" className="site-header__brand-link">
+                <span className="header-brand-name">RELIANCE DIMOND TOOLS</span>
+                <span className="header-brand-tagline">
+                  Engineering Precision Since 1994, Excellence Measured in Microns.
+                </span>
               </Link>
-              <a
-                href="mailto:info@reliancediamondtools.com"
-                className="hidden lg:flex items-center justify-center w-9 h-9 border border-light-steel-blue/50 text-light-steel-blue hover:bg-white/10 hover:text-white transition-colors rounded-sm"
-                aria-label="Email info@reliancediamondtools.com"
-              >
-                <Mail className="w-4 h-4" />
-              </a>
+            </div>
+
+            <div className="site-header__menu-toggle shrink-0">
               <button
                 type="button"
                 aria-label="Toggle menu"
                 aria-expanded={mobileOpen}
-                className="md:hidden w-10 h-10 flex items-center justify-center text-white"
+                className="md:hidden site-header__icon-btn"
                 onClick={() => setMobileOpen(!mobileOpen)}
               >
-                {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
             </div>
           </div>
+
+          <nav className="site-header__nav hidden md:flex" aria-label="Main navigation">
+            {navItems.map((item) =>
+              item.menu === "products" ? (
+                <div
+                  key={item.href}
+                  className="relative"
+                  onMouseEnter={() => setDesktopProductsOpen(true)}
+                >
+                  <button
+                    type="button"
+                    id="products-menu-trigger"
+                    aria-expanded={desktopProductsOpen}
+                    aria-haspopup="true"
+                    aria-controls="products-mega-menu-panel"
+                    className={`${navLinkClass(isActive(item.href))} inline-flex items-center gap-1`}
+                  >
+                    {item.label}
+                    <ChevronDown
+                      className={`w-3.5 h-3.5 transition-transform ${desktopProductsOpen ? "rotate-180" : ""}`}
+                      aria-hidden="true"
+                    />
+                  </button>
+                </div>
+              ) : (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={navLinkClass(isActive(item.href))}
+                >
+                  {item.label}
+                </Link>
+              )
+            )}
+          </nav>
         </div>
 
         {desktopProductsOpen && (
@@ -181,7 +165,7 @@ export default function Header() {
         )}
 
         {mobileOpen && (
-          <div className="md:hidden bg-header-bg-dropdown border-t border-light-steel-blue/20 max-h-[80vh] overflow-y-auto">
+          <div className="site-header__mobile-panel md:hidden">
             <nav className="py-3 px-4 flex flex-col" aria-label="Mobile navigation">
               {navItems.map((item) =>
                 item.menu === "products" ? (
@@ -190,7 +174,7 @@ export default function Header() {
                       type="button"
                       aria-expanded={productsOpen}
                       aria-controls="mobile-products-panel"
-                      className="flex items-center justify-between w-full text-sm font-medium text-white py-3 px-3 border-b border-white/10"
+                      className="site-header__mobile-link flex items-center justify-between w-full"
                       onClick={() => setProductsOpen(!productsOpen)}
                     >
                       {item.label}
@@ -209,9 +193,7 @@ export default function Header() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`text-sm font-medium py-3 px-3 border-b border-white/10 ${
-                      isActive(item.href) ? "text-white" : "text-light-steel-blue"
-                    }`}
+                    className={`site-header__mobile-link ${isActive(item.href) ? "site-header__mobile-link--active" : ""}`}
                     onClick={() => setMobileOpen(false)}
                   >
                     {item.label}
@@ -220,7 +202,7 @@ export default function Header() {
               )}
               <Link
                 href="/contact"
-                className="btn-primary mx-3 mt-4 mb-2 text-center"
+                className="btn-primary mx-1 mt-4 mb-2 text-center text-sm"
                 onClick={() => setMobileOpen(false)}
               >
                 Request Quote

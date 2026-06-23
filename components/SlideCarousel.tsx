@@ -38,45 +38,76 @@ export default function SlideCarousel({
   const goPrev = () => setIndex((i) => Math.max(0, i - 1));
   const goNext = () => setIndex((i) => Math.min(slideCount - 1, i + 1));
 
+  const track = (
+    <div className="overflow-hidden">
+      <div
+        className="flex transition-transform duration-500 ease-in-out"
+        style={{ transform: `translateX(-${index * 100}%)` }}
+      >
+        {slides.map((slide, i) => (
+          <div key={i} className="w-full shrink-0">
+            {slide}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  const chevronIconClass = "w-8 h-8 md:w-10 md:h-10";
+
   return (
     <div className={`relative w-full ${wrapperPadding} ${className}`}>
-      <div className="relative">
-        {showNav && (
-          <>
-            <button
-              type="button"
-              aria-label="Previous slide"
-              onClick={goPrev}
-              disabled={index === 0}
-              className={`${navClass} ${useChevron ? "carousel-chevron-btn-left" : "carousel-nav-btn-left"} ${navPositionClass}`}
-            >
-              <ChevronLeft className={useChevron ? "w-8 h-8 md:w-10 md:h-10" : "w-5 h-5"} />
-            </button>
-            <button
-              type="button"
-              aria-label="Next slide"
-              onClick={goNext}
-              disabled={index === slideCount - 1}
-              className={`${navClass} ${useChevron ? "carousel-chevron-btn-right" : "carousel-nav-btn-right"} ${navPositionClass}`}
-            >
-              <ChevronRight className={useChevron ? "w-8 h-8 md:w-10 md:h-10" : "w-5 h-5"} />
-            </button>
-          </>
-        )}
-
-        <div className="overflow-hidden">
-          <div
-            className="flex transition-transform duration-500 ease-in-out"
-            style={{ transform: `translateX(-${index * 100}%)` }}
+      {useChevron && showNav ? (
+        <div className="carousel-chevron-layout">
+          <button
+            type="button"
+            aria-label="Previous slide"
+            onClick={goPrev}
+            disabled={index === 0}
+            className={`${navClass} carousel-chevron-btn--outside`}
           >
-            {slides.map((slide, i) => (
-              <div key={i} className="w-full shrink-0">
-                {slide}
-              </div>
-            ))}
-          </div>
+            <ChevronLeft className={chevronIconClass} />
+          </button>
+
+          <div className="carousel-chevron-layout__track min-w-0">{track}</div>
+
+          <button
+            type="button"
+            aria-label="Next slide"
+            onClick={goNext}
+            disabled={index === slideCount - 1}
+            className={`${navClass} carousel-chevron-btn--outside`}
+          >
+            <ChevronRight className={chevronIconClass} />
+          </button>
         </div>
-      </div>
+      ) : (
+        <div className="relative">
+          {showNav && (
+            <>
+              <button
+                type="button"
+                aria-label="Previous slide"
+                onClick={goPrev}
+                disabled={index === 0}
+                className={`${navClass} carousel-nav-btn-left ${navPositionClass}`}
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                type="button"
+                aria-label="Next slide"
+                onClick={goNext}
+                disabled={index === slideCount - 1}
+                className={`${navClass} carousel-nav-btn-right ${navPositionClass}`}
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </>
+          )}
+          {track}
+        </div>
+      )}
 
       {showNav && showDots && (
         <CarouselDots

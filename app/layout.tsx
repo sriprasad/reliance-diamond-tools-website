@@ -63,7 +63,7 @@ export default function RootLayout({
       <body className="antialiased flex min-h-screen flex-col site-body">
         <JsonLd />
         <Header />
-        <main className="flex-1 flex flex-col pt-[76px] md:pt-[84px]">{children}</main>
+        <main className="flex-1 flex flex-col site-main-offset">{children}</main>
         <Footer />
         <CookieConsent />
       </body>
