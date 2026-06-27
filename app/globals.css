@@ -199,6 +199,30 @@ body {
   }
 }
 
+.section-padding-tight-top {
+  padding-top: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .section-padding-tight-top {
+    padding-top: 1rem;
+  }
+}
+
+.industries-home-section {
+  padding-top: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .industries-home-section {
+    padding-top: 0.75rem;
+  }
+}
+
+.industries-home-section .section-accent-line {
+  margin-bottom: 0.625rem;
+}
+
 .section-padding-sm {
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;

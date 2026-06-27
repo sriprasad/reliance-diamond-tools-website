@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import HomeHeroBanner from "../components/HomeHeroBanner";
+// import HomeHeroBanner from "../components/HomeHeroBanner";
 import HomeEnterpriseStats from "@/components/HomeEnterpriseStats";
 import HomeFoundationSlider from "@/components/HomeFoundationSlider";
 import HomeCustomersSection from "@/components/HomeCustomersSection";
@@ -59,7 +59,44 @@ const whyChooseUs = [
 export default function HomePage() {
   return (
     <>
-      <HomeHeroBanner />
+      {/* <HomeHeroBanner /> */}
+
+      <section id="industries" className="section-white section-padding section-padding-tight-top industries-home-section">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionTitle eyebrow="Sectors We Serve" center />
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+            {industries.map((ind, index) => (
+              <Link
+                key={ind.title}
+                href="/industries"
+                className="industry-photo-card card-interactive group relative aspect-[4/3] overflow-hidden rounded-sm shadow-[0_8px_24px_rgba(4,88,146,0.1)]"
+              >
+                <Image
+                  src={ind.image}
+                  alt={`${ind.title} industry`}
+                  fill
+                  className="industry-photo-card-image object-cover"
+                  sizes="(max-width: 768px) 50vw, 33vw"
+                  priority={index < 3}
+                  loading={index < 3 ? undefined : "lazy"}
+                />
+                <div className="absolute inset-0 industry-card-overlay pointer-events-none" />
+                <div className="absolute inset-0 flex flex-col justify-end industry-photo-card-content pointer-events-none">
+                  <h3 className="industry-photo-card-title">
+                    <span className="industry-photo-card-title-label">{ind.title}</span>
+                  </h3>
+                  <span className="industry-photo-card-tag">Products</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+          <div className="text-center mt-8">
+            <Link href="/industries" className="btn-secondary">
+              View All Industries
+            </Link>
+          </div>
+        </div>
+      </section>
 
       <HomeEnterpriseStats />
 
@@ -126,51 +163,6 @@ export default function HomePage() {
             every industrial application.
           </p>
           <HomePortfolioCarousel />
-        </div>
-      </section>
-
-      <section id="industries" className="section-white section-padding">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionTitle
-            eyebrow="Sectors"
-            title="Industries We Serve"
-            center
-            className="mb-3"
-          />
-          <p className="section-intro section-intro-center mb-10">
-            Precision tooling solutions for Automotive, Aerospace, Optical, Medical
-            Devices, Die &amp; Mold and General Engineering sectors.
-          </p>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {industries.map((ind) => (
-              <Link
-                key={ind.title}
-                href="/industries"
-                className="industry-photo-card card-interactive group relative aspect-[4/3] overflow-hidden rounded-sm shadow-[0_8px_24px_rgba(4,88,146,0.1)]"
-              >
-                <Image
-                  src={ind.image}
-                  alt={`${ind.title} industry`}
-                  fill
-                  className="industry-photo-card-image object-cover"
-                  sizes="(max-width: 768px) 50vw, 33vw"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 industry-card-overlay pointer-events-none" />
-                <div className="absolute inset-0 flex flex-col justify-end industry-photo-card-content pointer-events-none">
-                  <h3 className="industry-photo-card-title">
-                    <span className="industry-photo-card-title-label">{ind.title}</span>
-                  </h3>
-                  <span className="industry-photo-card-tag">Products</span>
-                </div>
-              </Link>
-            ))}
-          </div>
-          <div className="text-center mt-8">
-            <Link href="/industries" className="btn-secondary">
-              View All Industries
-            </Link>
-          </div>
         </div>
       </section>
 

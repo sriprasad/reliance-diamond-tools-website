@@ -1,5 +1,5 @@
 interface SectionTitleProps {
-  title: string;
+  title?: string;
   /** Small uppercase kicker above the heading */
   eyebrow?: string;
   className?: string;
@@ -28,15 +28,19 @@ export default function SectionTitle({
             {eyebrow}
           </p>
           <div
-            className={`section-accent-line mb-3 ${center ? "section-accent-line-center" : ""}`}
+            className={`section-accent-line ${title ? "mb-3" : ""} ${
+              center ? "section-accent-line-center" : ""
+            }`}
           />
         </>
       )}
-      <h2
-        className={`font-heading section-title ${light ? "text-white" : "text-black"} ${className}`}
-      >
-        {title}
-      </h2>
+      {title ? (
+        <h2
+          className={`font-heading section-title ${light ? "text-white" : "text-black"} ${className}`}
+        >
+          {title}
+        </h2>
+      ) : null}
     </div>
   );
 }
