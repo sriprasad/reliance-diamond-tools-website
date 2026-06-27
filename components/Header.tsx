@@ -83,11 +83,11 @@ export default function Header() {
           <div className="site-header__top">
             <Link href="/" className="site-header__logo-link shrink-0" aria-label="Reliance Diamond Tools home">
               <Image
-                src="/assert/image/RDTLogo.png"
+                src="/assert/image/Logo.svg"
                 alt=""
-                width={104}
-                height={104}
-                className="site-header__logo header-logo"
+                width={1500}
+                height={500}
+                className="site-header__logo"
                 priority
               />
             </Link>
