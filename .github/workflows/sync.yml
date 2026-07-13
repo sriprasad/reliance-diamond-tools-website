@@ -13,12 +13,25 @@ jobs:
       - name: Checkout Source Repository
         uses: actions/checkout@v4
 
-      - name: Push to Destination Repository
-        uses: cpina/github-action-push-to-another-repository@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.PAT_TOKEN }}
-        with:
-          source-directory: '.'
-          destination-github-username: sriprasad
-          destination-repository-name: reliance-diamond-tools-website-v2
-          target-branch: main
+      - name: Configure Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "github-actions@github.com"
+
+      - name: Clone Destination Repository
+        run: |
+          git clone https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/sriprasad/reliance-diamond-tools-website-v2.git destination
+
+      - name: Copy Files
+        run: |
+          rsync -av --delete \
+            --exclude='.git' \
+            --exclude='.github' \
+            ./ destination/
+
+      - name: Commit and Push
+        run: |
+          cd destination
+          git add .
+          git diff --cached --quiet || git commit -m "Sync from source repository"
+          git push origin main
