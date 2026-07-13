@@ -1,89 +1,153 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import CarouselDots from "./CarouselDots";
+import {
+  homeHeroSlides,
+  HOME_HERO_ROTATE_MS,
+} from "@/data/homeHeroSlides";
 
-const BANNER_IMAGES = [
-  "/assert/image/BannerImage1.png",
-  "/assert/image/BannerImage2.png",
-  "/assert/image/BannerImage3.png",
-  "/assert/image/BannerImage4.png",
-];
-
-const ROTATE_MS = 6000;
+const SLIDE_COUNT = homeHeroSlides.length;
+const SWIPE_THRESHOLD_PX = 48;
 
 export default function HomeHeroBanner() {
   const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const touchStartX = useRef<number | null>(null);
+  const regionRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const t = setInterval(
-      () => setIndex((i) => (i + 1) % BANNER_IMAGES.length),
-      ROTATE_MS
-    );
-    return () => clearInterval(t);
+  const goTo = useCallback((next: number) => {
+    setIndex(((next % SLIDE_COUNT) + SLIDE_COUNT) % SLIDE_COUNT);
   }, []);
 
+  const goPrev = useCallback(() => goTo(index - 1), [goTo, index]);
+  const goNext = useCallback(() => goTo(index + 1), [goTo, index]);
+  const pause = useCallback(() => setPaused(true), []);
+  const resume = useCallback(() => setPaused(false), []);
+
+  useEffect(() => {
+    if (paused) return;
+    const timer = window.setInterval(() => {
+      setIndex((current) => (current + 1) % SLIDE_COUNT);
+    }, HOME_HERO_ROTATE_MS);
+    return () => window.clearInterval(timer);
+  }, [paused]);
+
+  const onKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      goPrev();
+    } else if (event.key === "ArrowRight") {
+      event.preventDefault();
+      goNext();
+    }
+  };
+
+  const onTouchStart = (event: React.TouchEvent) => {
+    touchStartX.current = event.changedTouches[0]?.clientX ?? null;
+  };
+
+  const onTouchEnd = (event: React.TouchEvent) => {
+    const startX = touchStartX.current;
+    const endX = event.changedTouches[0]?.clientX;
+    touchStartX.current = null;
+    if (startX == null || endX == null) return;
+    const delta = endX - startX;
+    if (Math.abs(delta) < SWIPE_THRESHOLD_PX) return;
+    if (delta > 0) goPrev();
+    else goNext();
+  };
+
   return (
-    <section className="relative min-h-[460px] md:min-h-[500px] lg:min-h-[520px] flex items-center overflow-hidden section-bright pb-14 hero-banner-interactive isolate">
-      <div className="absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
-        {BANNER_IMAGES.map((src, i) => {
-          const isActive = i === index;
-          return (
+    <section className="hero-product-banner" aria-label="Featured precision tools">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+          ref={regionRef}
+          className="hero-product-slider"
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="Product highlights"
+          tabIndex={0}
+          onKeyDown={onKeyDown}
+          onMouseEnter={pause}
+          onMouseLeave={resume}
+          onFocusCapture={pause}
+          onBlurCapture={(event) => {
+            if (!regionRef.current?.contains(event.relatedTarget as Node | null)) {
+              resume();
+            }
+          }}
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
+        >
+          <div className="hero-product-slider__viewport overflow-hidden">
             <div
-              key={src}
-              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                isActive ? "opacity-100 z-[1]" : "opacity-0 z-0 invisible"
-              }`}
+              className="hero-product-slider__track flex transition-transform duration-500 ease-in-out"
+              style={{ transform: `translateX(-${index * 100}%)` }}
+              aria-live="polite"
             >
-              <Image
-                src={src}
-                alt=""
-                fill
-                className="object-cover object-center hero-bg-image"
-                priority={i === 0}
-                sizes="100vw"
-                aria-hidden={true}
-              />
+              {homeHeroSlides.map((slide) => (
+                <article
+                  key={slide.id}
+                  className="hero-product-slide w-full shrink-0"
+                  aria-roledescription="slide"
+                >
+                  <div className="hero-product-slide__layout">
+                    <div className="hero-product-slide__copy">
+                      <h2 className="hero-product-slide__title">{slide.title}</h2>
+                      <p className="hero-product-slide__body">{slide.content}</p>
+                    </div>
+
+                    <div className="hero-product-slide__visual">
+                      <div className="hero-product-slide__image-frame">
+                        <Image
+                          src={slide.image}
+                          alt={slide.imageAlt}
+                          fill
+                          className="hero-product-slide__image object-contain"
+                          sizes="(max-width: 1023px) 100vw, 50vw"
+                          priority={slide.id === homeHeroSlides[0].id}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              ))}
             </div>
-          );
-        })}
-        <div className="absolute inset-0 z-[2] hero-overlay pointer-events-none" />
-      </div>
+          </div>
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-12">
-        <div className="hero-copy max-w-3xl">
-          <h1 className="text-sm md:text-base text-black font-semibold leading-snug mb-2 font-heading">
-            Manufacturers of Advanced Diamond &amp; Super Abrasive Cutting Tools
-          </h1>
+          <div className="hero-product-slider__controls">
+            <button
+              type="button"
+              className="carousel-nav-btn hero-product-slider__nav hero-product-slider__nav--prev"
+              aria-label="Previous slide"
+              onClick={goPrev}
+            >
+              <ChevronLeft className="w-5 h-5" strokeWidth={2.25} />
+            </button>
 
-          <p className="text-sm text-dim-grey-2 mb-6 max-w-xl leading-relaxed">
-            For over three decades, we have delivered precision cutting solutions
-            specializing in Natural Diamond, PCD, CBN, Carbide and Ceramic tooling —
-            designed to improve productivity and reduce operational costs.
-          </p>
+            <CarouselDots
+              count={SLIDE_COUNT}
+              activeIndex={index}
+              onSelect={goTo}
+              variant="inline"
+              className="hero-product-slider__dots"
+              ariaLabel="Product highlight slides"
+            />
 
-          <div className="flex flex-wrap gap-2.5">
-            <Link href="/products" className="btn-secondary text-xs px-5 py-2.5">
-              Explore Products
-            </Link>
-            <Link href="/contact" className="btn-primary text-xs px-5 py-2.5">
-              Request a Quote
-            </Link>
+            <button
+              type="button"
+              className="carousel-nav-btn hero-product-slider__nav hero-product-slider__nav--next"
+              aria-label="Next slide"
+              onClick={goNext}
+            >
+              <ChevronRight className="w-5 h-5" strokeWidth={2.25} />
+            </button>
           </div>
         </div>
       </div>
-
-      <CarouselDots
-        count={BANNER_IMAGES.length}
-        activeIndex={index}
-        onSelect={setIndex}
-        theme="dark"
-        variant="pill"
-        className="z-20"
-        ariaLabel="Hero banner slides"
-      />
     </section>
   );
 }

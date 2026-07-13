@@ -6,7 +6,7 @@ import { createPageMetadata } from "@/lib/seo";
 export const metadata: Metadata = createPageMetadata({
   title: "Industries We Serve",
   description:
-    "We serve Automotive, Aerospace, Optical, Medical Devices, Die & Mold, and General Engineering industries.",
+    "We serve Automobile, Aerospace, Optical, Medical Industry, Die & Mould, and General Engineering industries.",
   path: "/industries",
 });
 

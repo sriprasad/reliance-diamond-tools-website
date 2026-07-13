@@ -6,10 +6,10 @@ export interface Industry {
 
 export const industries: Industry[] = [
   {
-    title: "Automotive",
+    title: "Automobile",
     description:
       "Precision tooling for engine components, transmission, and automotive manufacturing.",
-    image: "/assert/image/industries/automotive.jpg",
+    image: "/assert/image/industries/automobile.png",
   },
   {
     title: "Aerospace",
@@ -26,15 +26,15 @@ export const industries: Industry[] = [
     image: "/assert/image/industries/optical.jpg",
   },
   {
-    title: "Medical Devices",
+    title: "Medical Industry",
     description:
       "Reliable tooling for medical device manufacturing and surgical instrument production.",
-    image: "/assert/image/industries/medical-devices.jpg",
+    image: "/assert/image/industries/medical-industry.png",
   },
   {
-    title: "Die & Mold",
-    description: "PCD, CBN and carbide solutions for die and mold making applications.",
-    image: "/assert/image/industries/die-mold.jpg",
+    title: "Die & Mould",
+    description: "PCD, CBN and carbide solutions for die and mould making applications.",
+    image: "/assert/image/industries/die-mould.png",
   },
   {
     title: "General Engineering",

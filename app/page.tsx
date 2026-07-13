@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-// import HomeHeroBanner from "../components/HomeHeroBanner";
+import HomeHeroBanner from "@/components/HomeHeroBanner";
 import HomeEnterpriseStats from "@/components/HomeEnterpriseStats";
 import HomeFoundationSlider from "@/components/HomeFoundationSlider";
 import HomeCustomersSection from "@/components/HomeCustomersSection";
@@ -12,6 +12,7 @@ import HomePortfolioCarousel from "@/components/HomePortfolioCarousel";
 import SectionTitle from "@/components/SectionTitle";
 import { createPageMetadata } from "@/lib/seo";
 import { industries } from "@/data/industries";
+import { aboutIntroParagraphs } from "@/data/aboutContent";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Engineering Precision Since 1994",
@@ -59,7 +60,7 @@ const whyChooseUs = [
 export default function HomePage() {
   return (
     <>
-      {/* <HomeHeroBanner /> */}
+      <HomeHeroBanner />
 
       <section id="industries" className="section-white section-padding section-padding-tight-top industries-home-section">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -130,19 +131,12 @@ export default function HomePage() {
                 title="About Reliance Diamond Tools"
                 className="mb-4"
               />
-              <p className="text-body-sm mb-4">
-                Founded in 1994 by Mr. J. Ravi, the company began as a small-scale
-                craftsmanship-driven unit. Today, it has grown into a ₹60 Crore
-                enterprise with over 130 skilled professionals and a 38,000 sq.ft
-                manufacturing facility in Madhavaram, Chennai.
-              </p>
-              <p className="text-body-sm mb-6">
-                Our team of engineers and technocrats work together to deliver
-                reliable, high-performance tooling solutions across Natural Diamond,
-                PCD, CBN, Carbide and Ceramic applications for improved productivity
-                and reduced operational costs.
-              </p>
-              <Link href="/about" className="btn-secondary">
+              {aboutIntroParagraphs.map((paragraph) => (
+                <p key={paragraph.slice(0, 40)} className="text-body-sm mb-4 leading-relaxed">
+                  {paragraph}
+                </p>
+              ))}
+              <Link href="/about" className="btn-secondary mt-2">
                 Learn About Us
               </Link>
             </div>

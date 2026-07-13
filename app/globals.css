@@ -43,6 +43,7 @@
   --grey: #868686;
   --alice-blue: #f0f7fc;
   --ice-blue: #dceef8;
+  --ice-blue-light: #f0f9fd;
   --surface-bright: #f8fbfd;
   --dark-grey: #b1b1b1;
   --grey-background: #eef2f6;
@@ -1298,6 +1299,191 @@ body {
   z-index: 10;
 }
 
+/* Homepage — product hero banner slider */
+.hero-product-banner {
+  background: var(--ice-blue-light);
+  border-bottom: 1px solid rgba(4, 88, 146, 0.08);
+  padding: 1.5rem 0 1.75rem;
+}
+
+@media (min-width: 768px) {
+  .hero-product-banner {
+    padding: 2rem 0 2.25rem;
+  }
+}
+
+.hero-product-slider {
+  position: relative;
+  outline: none;
+}
+
+.hero-product-slider:focus-visible {
+  outline: 2px solid var(--royal-blue);
+  outline-offset: 4px;
+  border-radius: var(--radius);
+}
+
+.hero-product-slider__viewport {
+  padding: 0;
+}
+
+.hero-product-slider__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.875rem;
+  margin-top: 1rem;
+  padding-bottom: 0.125rem;
+}
+
+.hero-product-slider__nav.carousel-nav-btn {
+  position: static;
+  top: auto;
+  transform: none;
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  box-shadow: 0 4px 14px rgba(4, 88, 146, 0.12);
+}
+
+.hero-product-slider__nav.carousel-nav-btn:hover:not(:disabled) {
+  transform: none;
+}
+
+.hero-product-slider__dots {
+  margin: 0;
+  padding: 0;
+}
+
+.hero-product-slide__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: stretch;
+  min-height: 18rem;
+}
+
+@media (min-width: 768px) {
+  .hero-product-slide__layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 2rem;
+    min-height: 20rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-product-slide__layout {
+    min-height: 22rem;
+    gap: 2.5rem;
+  }
+}
+
+.hero-product-slide__copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+  padding: 0.25rem 0;
+}
+
+@media (min-width: 768px) {
+  .hero-product-slide__copy {
+    width: 100%;
+    padding: 0.5rem 0;
+  }
+}
+
+.hero-product-slide__title {
+  margin: 0 0 1rem;
+  font-family: var(--font-frutiger);
+  font-size: 1.375rem;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--royal-blue);
+}
+
+@media (min-width: 768px) {
+  .hero-product-slide__title {
+    font-size: 1.625rem;
+    margin-bottom: 1.125rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-product-slide__title {
+    font-size: 1.875rem;
+    margin-bottom: 1.25rem;
+  }
+}
+
+.hero-product-slide__body {
+  margin: 0;
+  max-width: none;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.7;
+  color: var(--dim-grey-2);
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+
+@media (min-width: 768px) {
+  .hero-product-slide__body {
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+}
+
+.hero-product-slide__visual {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  min-height: 14rem;
+  height: 100%;
+  background: var(--ice-blue-light);
+}
+
+@media (min-width: 768px) {
+  .hero-product-slide__visual {
+    min-height: 100%;
+  }
+}
+
+.hero-product-slide__image-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 14rem;
+  background: var(--ice-blue-light);
+  border: none;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .hero-product-slide__image-frame {
+    min-height: 20rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-product-slide__image-frame {
+    min-height: 22rem;
+  }
+}
+
+.hero-product-slide__image {
+  padding: 0.5rem;
+  mix-blend-mode: multiply;
+}
+
+@media (min-width: 768px) {
+  .hero-product-slide__image {
+    padding: 0.75rem;
+  }
+}
+
 /* Enterprise stats strip — below hero */
 .enterprise-stats-strip {
   background: linear-gradient(90deg, var(--royal-blue) 0%, #034a7a 100%);
@@ -1508,22 +1694,22 @@ body {
   align-self: stretch;
   justify-content: flex-start;
   flex-shrink: 0;
-  width: 9.5rem;
-  min-height: 3.5rem;
+  width: 8rem;
+  min-height: 3rem;
   line-height: 0;
 }
 
 @media (min-width: 640px) {
   .site-header__logo-link {
-    width: 11.5rem;
-    min-height: 3.75rem;
+    width: 9.5rem;
+    min-height: 3.25rem;
   }
 }
 
 @media (min-width: 1024px) {
   .site-header__logo-link {
-    width: 14.5rem;
-    min-height: 4.25rem;
+    width: 11.5rem;
+    min-height: 3.75rem;
   }
 }
 

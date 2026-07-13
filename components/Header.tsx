@@ -94,7 +94,7 @@ export default function Header() {
 
             <div className="site-header__brand min-w-0">
               <Link href="/" className="site-header__brand-link">
-                <span className="header-brand-name">RELIANCE DIMOND TOOLS</span>
+                <span className="header-brand-name">RELIANCE DIAMOND TOOLS</span>
                 <span className="header-brand-tagline">
                   Engineering Precision Since 1994, Excellence Measured in Microns.
                 </span>

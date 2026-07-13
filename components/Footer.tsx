@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { industries } from "@/data/industries";
 import { productCategories } from "@/data/products";
 
 const footerNav = [
@@ -61,15 +62,13 @@ export default function Footer() {
           <div>
             <h3 className="font-heading text-sm font-bold text-black mb-3">Industries</h3>
             <ul className="space-y-2">
-              {["Automotive", "Aerospace", "Optical", "Medical Devices", "Die & Mold", "General Engineering"].map(
-                (ind) => (
-                  <li key={ind}>
-                    <Link href="/industries" className="footer-link">
-                      {ind}
-                    </Link>
-                  </li>
-                )
-              )}
+              {industries.map((ind) => (
+                <li key={ind.title}>
+                  <Link href="/industries" className="footer-link">
+                    {ind.title}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 

@@ -63,7 +63,7 @@ export const foundationSlides: FoundationSlide[] = [
     type: "body",
     iconKey: "journey",
     body:
-      "Founded in 1994 by Mr. J. Ravi as a small-scale, craftsmanship-driven unit. Today, Reliance Diamond Tools has grown into a ₹60 Crore enterprise with 130+ skilled professionals operating from a 38,000 sq.ft. manufacturing facility in Madhavaram, Chennai — serving Automotive, Aerospace, Optical, Medical Devices, Die & Mold, and General Engineering industries.",
+      "Founded in 1994 by Mr. J. Ravi as a small-scale, craftsmanship-driven unit. Today, Reliance Diamond Tools has grown into a ₹60 Crore enterprise with 130+ skilled professionals operating from a 38,000 sq.ft. manufacturing facility in Madhavaram, Chennai — serving Automobile, Aerospace, Optical, Medical Industry, Die & Mould, and General Engineering industries.",
   },
 ];
 
