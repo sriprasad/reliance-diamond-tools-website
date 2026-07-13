@@ -1,0 +1,24 @@
+name: Sync Repository
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Repository
+        uses: actions/checkout@v4
+
+      - name: Push to Destination Repository
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.PAT_TOKEN }}
+        with:
+          source-directory: '.'
+          destination-github-username: sriprasad
+          destination-repository-name: reliance-diamond-tools-website-v2
+          target-branch: main
