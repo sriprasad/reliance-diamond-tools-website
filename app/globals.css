@@ -1664,25 +1664,31 @@ body {
   border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
 
+.site-header__shell {
+  position: relative;
+}
+
 .site-header__top {
   position: relative;
   display: flex;
-  align-items: stretch;
+  align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
   min-height: 3.5rem;
-  padding: 0.25rem 0 0;
+  padding: 0.375rem 0;
 }
 
 @media (min-width: 768px) {
   .site-header__top {
-    padding: 0.375rem 0 0;
+    padding: 0.5rem 0 0.375rem;
+    min-height: 3.75rem;
   }
 }
 
 @media (min-width: 1024px) {
   .site-header__top {
     min-height: 4.25rem;
+    padding: 0.5rem 0 0.375rem;
   }
 }
 
@@ -1785,8 +1791,7 @@ body {
   justify-content: center;
   flex-wrap: wrap;
   gap: 0.5rem 0.75rem;
-  padding: 0.125rem 0 0.5rem;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0.25rem 0 0.625rem;
 }
 
 .site-header__nav-link {

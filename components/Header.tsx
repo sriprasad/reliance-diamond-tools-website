@@ -13,7 +13,7 @@ const navItems = [
   { href: "/products", label: "Products", menu: "products" as const },
   { href: "/services", label: "Services" },
   { href: "/industries", label: "Industries" },
-  { href: "/customers", label: "Customers" },
+  // { href: "/customers", label: "Customers" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -80,6 +80,7 @@ export default function Header() {
         onMouseLeave={() => setDesktopProductsOpen(false)}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="site-header__shell">
           <div className="site-header__top">
             <Link href="/" className="site-header__logo-link shrink-0" aria-label="Reliance Diamond Tools home">
               <Image
@@ -92,14 +93,14 @@ export default function Header() {
               />
             </Link>
 
-            <div className="site-header__brand min-w-0">
+            {/* <div className="site-header__brand min-w-0">
               <Link href="/" className="site-header__brand-link">
                 <span className="header-brand-name">RELIANCE DIAMOND TOOLS</span>
                 <span className="header-brand-tagline">
                   Engineering Precision Since 1994, Excellence Measured in Microns.
                 </span>
               </Link>
-            </div>
+            </div> */}
 
             <div className="site-header__menu-toggle shrink-0">
               <button
@@ -148,6 +149,7 @@ export default function Header() {
               )
             )}
           </nav>
+          </div>
         </div>
 
         {desktopProductsOpen && (

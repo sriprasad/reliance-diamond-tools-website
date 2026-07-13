@@ -19,17 +19,14 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-14">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           <div>
-            <div className="flex items-center gap-3 mb-6">
+            <div className="mb-6">
               <Image
-                src="/assert/image/RDTLogo.png"
+                src="/assert/image/Logo.svg"
                 alt="Reliance Diamond Tools"
-                width={44}
-                height={44}
-                className="h-11 w-11 object-contain logo-blood-red shrink-0"
+                width={1500}
+                height={500}
+                className="h-10 w-auto max-w-[10rem] object-contain object-left sm:h-11 sm:max-w-[11.5rem]"
               />
-              <span className="font-heading text-brand-name text-xs leading-tight">
-                RELIANCE DIAMOND TOOLS
-              </span>
             </div>
             <p className="footer-desc mb-4">
               Manufacturers of Advanced Diamond &amp; Super Abrasive Cutting Tools.

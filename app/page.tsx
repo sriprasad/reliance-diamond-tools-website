@@ -6,13 +6,17 @@ import HomeEnterpriseStats from "@/components/HomeEnterpriseStats";
 import HomeFoundationSlider from "@/components/HomeFoundationSlider";
 import HomeCustomersSection from "@/components/HomeCustomersSection";
 import ContactSection from "@/components/ContactSection";
-import MediaFigure from "@/components/MediaFigure";
-import { homeAboutSectionImages } from "@/data/homePortfolioImages";
-import HomePortfolioCarousel from "@/components/HomePortfolioCarousel";
+// import MediaFigure from "@/components/MediaFigure";
+// import { homeAboutSectionImages } from "@/data/homePortfolioImages";
+// import HomePortfolioCarousel from "@/components/HomePortfolioCarousel";
 import SectionTitle from "@/components/SectionTitle";
 import { createPageMetadata } from "@/lib/seo";
 import { industries } from "@/data/industries";
-import { aboutIntroParagraphs } from "@/data/aboutContent";
+// import { aboutIntroParagraphs } from "@/data/aboutContent";
+
+const homeSectors = industries.filter(
+  (ind) => !["Aerospace", "Optical Industry", "General Engineering"].includes(ind.title)
+);
 
 export const metadata: Metadata = createPageMetadata({
   title: "Engineering Precision Since 1994",
@@ -64,9 +68,9 @@ export default function HomePage() {
 
       <section id="industries" className="section-white section-padding section-padding-tight-top industries-home-section">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionTitle eyebrow="Sectors We Serve" center />
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
-            {industries.map((ind, index) => (
+          <SectionTitle eyebrow="Industries We Serve" center />
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
+            {homeSectors.map((ind) => (
               <Link
                 key={ind.title}
                 href="/industries"
@@ -77,9 +81,8 @@ export default function HomePage() {
                   alt={`${ind.title} industry`}
                   fill
                   className="industry-photo-card-image object-cover"
-                  sizes="(max-width: 768px) 50vw, 33vw"
-                  priority={index < 3}
-                  loading={index < 3 ? undefined : "lazy"}
+                  sizes="(max-width: 640px) 100vw, 33vw"
+                  priority
                 />
                 <div className="absolute inset-0 industry-card-overlay pointer-events-none" />
                 <div className="absolute inset-0 flex flex-col justify-end industry-photo-card-content pointer-events-none">
@@ -103,6 +106,7 @@ export default function HomePage() {
 
       <HomeFoundationSlider />
 
+      {/* Who We Are — uncomment when required
       <section id="about" className="section-white section-padding">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -143,7 +147,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      */}
 
+      {/* Our Products — uncomment when required
       <section className="section-muted section-padding portfolio-section">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionTitle
@@ -159,21 +165,19 @@ export default function HomePage() {
           <HomePortfolioCarousel />
         </div>
       </section>
+      */}
 
       <section className="section-bright section-padding-sm border-y border-gainsboro">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-4">
-            <div className="flex flex-col items-center shrink-0">
+            <div className="shrink-0">
               <Image
-                src="/assert/image/RDTLogo.png"
-                alt="Reliance Diamond Tools logo"
-                width={48}
-                height={48}
-                className="h-12 w-12 object-contain logo-blood-red"
+                src="/assert/image/Logo.svg"
+                alt="Reliance Diamond Tools"
+                width={1500}
+                height={500}
+                className="h-10 w-auto max-w-[9rem] object-contain object-left sm:h-12 sm:max-w-[11rem]"
               />
-              <span className="font-heading text-brand-name text-xs font-bold mt-1 tracking-wide">
-                RDT
-              </span>
             </div>
             <div>
               <p className="font-bold text-sm text-black">Technical Support &amp; Services</p>
